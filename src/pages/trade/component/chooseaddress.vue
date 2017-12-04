@@ -1,0 +1,68 @@
+<template>
+    <div class="address-box">
+        <div class="address-title">上门地址/时间</div>
+        <div class="address-content">
+            <div class="address-text">
+                <Icon icon="icon-dingweimendian" size="16" color="#999"/>
+                <span class="address-choose">
+                    创智天地7号楼12层4231室3我家地址很长...
+                </span>
+                <Icon icon="icon-jiantouptccc" size="14" color="#ccc"/>
+            </div>
+            <!-- <div class="address-input">-->
+                <!-- <Input placeholder="填写门牌号/楼号"> -->
+            <!--</div> -->
+        </div>
+        <div class="choose-time">
+                <div class="time-left">上门时间</div>
+                <div class="time-right">
+                    <span class="text">2017-04-21（周五）</span>
+                    <Icon icon="icon-jiantouptccc" size="14" color="#ccc"/>
+                </div>
+        </div>
+    </div>
+</template>
+<style lang="less">
+    .address-box{
+        height: 1.68rem;
+        margin: .08rem;
+        font-size: 13px;
+        color:#666;
+        .address-content{
+            margin-top: .07rem;
+            background: #fff;
+            height:1.44rem;
+            color:#333;
+            .address-text{
+                height: 0.48rem;
+                padding:0 .12rem;
+                line-height: .48rem;
+                font-size: 15px;
+                .address-choose{
+                    margin-left:.07rem;
+                }
+            }
+        }
+        .choose-time{
+            background: #fff;
+            height: .48rem;
+            padding:0 .12rem;
+            line-height: .48rem;
+            font-size: 15px;
+            color:#333;
+            position: relative;
+            .time-left{
+                display: inline-block;
+                height:100%;
+                position: absolute;
+                left:.12rem;
+            }
+            .time-right{
+                display: inline-block;
+                height:100%;
+                position: absolute;
+                right:.12rem;
+            }
+        }
+    }
+</style>
