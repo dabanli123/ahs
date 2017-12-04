@@ -9,9 +9,9 @@
                 </span>
                 <Icon icon="icon-jiantouptccc" size="14" color="#ccc"/>
             </div>
-            <!-- <div class="address-input">-->
-                <!-- <Input placeholder="填写门牌号/楼号"> -->
-            <!--</div> -->
+            <div class="address-input">
+                <Input placeholder="填写门牌号/楼号" /> 
+            </div>
         </div>
         <div class="choose-time">
                 <div class="time-left">上门时间</div>
@@ -28,20 +28,45 @@
         margin: .08rem;
         font-size: 13px;
         color:#666;
+        overflow: hidden;
         .address-content{
             margin-top: .07rem;
             background: #fff;
-            height:1.44rem;
+            //height:1.44rem;
             color:#333;
             .address-text{
                 height: 0.48rem;
                 padding:0 .12rem;
                 line-height: .48rem;
                 font-size: 15px;
+                position: relative;
                 .address-choose{
                     margin-left:.07rem;
                 }
+                &:after{
+                    content: "";
+                    width:100%;
+                    height: 0;
+                    border-bottom: 1px solid #eee;
+                    position: absolute;
+                    bottom: 0;
+                    left: .4rem;
+                }
             }
+            .address-input{
+                padding-left:.28rem;
+                position: relative;
+                &:after{
+                    content: "";
+                    width:100%;
+                    height: 0;
+                    border-bottom: 1px solid #eee;
+                    position: absolute;
+                    bottom: 0;
+                    left: .12rem;
+                }
+            }
+
         }
         .choose-time{
             background: #fff;

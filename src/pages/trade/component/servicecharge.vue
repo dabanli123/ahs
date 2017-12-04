@@ -6,7 +6,6 @@
 <style lang="less">
     .service-box{
         height: 0.32rem;
-        width:100%;
         color:#E29100;
         font-size: 13px;
         line-height: .32rem;
