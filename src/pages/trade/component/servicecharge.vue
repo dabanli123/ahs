@@ -1,6 +1,7 @@
 <template>
   <div class="service-box">
       <span>单次上门收取服务费10元</span>
+      <span>全国快递费25元以内包邮</span>
   </div>
 </template>
 <style lang="less">

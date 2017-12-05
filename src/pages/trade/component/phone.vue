@@ -13,7 +13,7 @@
 <style lang="less">
     .phone-box{
         height: 0.48rem;
-        margin:.08rem;
+        margin:0 .08rem .08rem .08rem;
         background-color: #fff;
     }
 </style>

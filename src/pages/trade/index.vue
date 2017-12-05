@@ -3,11 +3,15 @@
     <Headers></Headers>
     <Choosetype></Choosetype>
     <Service></Service>
-    <Chooseshop></Chooseshop>
-    <Chooseaddress></Chooseaddress>
+    <Payee></Payee>
+    <!-- <Chooseshop></Chooseshop>
+    <Chooseaddress></Chooseaddress> -->
     <Phone></Phone>
+    <Chooseexpress></Chooseexpress>
+    <Phoneorigin></Phoneorigin>
     <Coupon></Coupon>
     <Order></Order>
+    <Othertext></Othertext>
   </div>
 </template>
 <script>
@@ -19,6 +23,10 @@ import Coupon from "./component/coupon.vue";
 import Order from "./component/order.vue";
 import Service from "./component/servicecharge.vue";
 import Chooseaddress from "./component/chooseaddress.vue";
+import Payee from "./component/payee.vue";
+import Chooseexpress from "./component/chooseexpress.vue";
+import Phoneorigin from "./component/phoneorigin.vue";
+import Othertext from "./component/othertext.vue";
 export default {
   components: {
     Headers,
@@ -28,7 +36,11 @@ export default {
     Coupon,
     Order,
     Service,
-    Chooseaddress
+    Chooseaddress,
+    Payee,
+    Chooseexpress,
+    Phoneorigin,
+    Othertext
   },
 };
 </script>
