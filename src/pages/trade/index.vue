@@ -12,6 +12,7 @@
     <Coupon></Coupon>
     <Order></Order>
     <Othertext></Othertext>
+    {{a}}
   </div>
 </template>
 <script>
@@ -27,6 +28,7 @@ import Payee from "./component/payee.vue";
 import Chooseexpress from "./component/chooseexpress.vue";
 import Phoneorigin from "./component/phoneorigin.vue";
 import Othertext from "./component/othertext.vue";
+import {mapState, mapMutations, mapActions} from "vuex";
 export default {
   components: {
     Headers,
@@ -42,6 +44,21 @@ export default {
     Phoneorigin,
     Othertext
   },
+  computed:{
+    ...mapState({
+     // a:state=>state.trade.a
+    })
+  },
+  mounted(){
+    //this.A_TEST()
+    // setTimeout(()=>{
+    //   this.M_TEST(2)
+    // },2000)
+  },
+  methods:{
+    //...mapMutations(['M_TEST']),
+    //...mapActions(["A_TEST"])
+  }
 };
 </script>
 

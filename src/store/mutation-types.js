@@ -1,0 +1,1 @@
+export const M_GET_CITY = "M_GET_CITY"

@@ -1,12 +1,24 @@
 <template>
   <div id="app">
-    <router-view/>
+    <router-view v-if="cityInfo"/>
   </div>
 </template>
 
 <script>
+import {mapState, mapMutations, mapActions} from "vuex";
 export default {
-  name: 'app'
+  name: 'app',
+  computed:{
+    ...mapState({
+      cityInfo:state=>state.trade.cityInfo
+    })
+  },
+  mounted(){
+    this.A_GET_CITY()
+  },
+  methods:{
+    ...mapActions(["A_GET_CITY"])
+  }
 }
 </script>
 
