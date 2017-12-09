@@ -1,41 +1,78 @@
 <template>
   <div class="choose-box">
-      <!-- <Radio value="门店回收" name="choosetype" :checked="item" @change="onSelect" ></Radio>
-      <Radio value="上门回收" name="choosetype" :checked="item" @change="onSelect" ></Radio>
-      <Radio value="快递回收" name="choosetype" :checked="item" @change="onSelect" ></Radio> -->
-      <label class="radio-box">
+      <label class="radio-box" v-if="pickuptype.includes(5)" @click="onClickType(5)">
           <span class="top-left">快速</span>
-          <input type="radio" value="门店回收" name="choosetype" checked>
+          <input type="radio" value="门店回收" name="choosetype" :checked="submitInfo.pickuptype == 5">
           <span class="radio-context">
               <Icon icon="icon-mendian" svg size="26" className="context-icon"/>
-              <span class="context-text">门店回收</span>
+              <span class="context-text">门店回收222</span>
           </span>
-          <Icon icon="icon-gouxuan" svg size="15.8" className="bottom-icon"/>
+          <Icon icon="icon-gouxuan" svg size="15.8" className="bottom-icon" v-if="submitInfo.pickuptype == 5"/>
       </label>
 
-      <label class="radio-box">
+      <label class="radio-box" v-if="pickuptype.includes(1) || pickuptype.includes(2)" @click="onClickType(1)">
           <span class="top-left">方便</span>
-          <input type="radio" value="上门回收" name="choosetype" >
+          <input type="radio" value="上门回收" name="choosetype" :checked="submitInfo.pickuptype == 1">
           <span class="radio-context">
               <Icon icon="icon-shangmen-" svg size="26" className="context-icon"/>
               <span class="context-text">上门回收</span>
           </span>
-          <Icon icon="icon-gouxuan" svg size="15.8" className="bottom-icon"/>
+          <Icon icon="icon-gouxuan" svg size="15.8" className="bottom-icon" v-if="submitInfo.pickuptype == 1"/>
       </label>
 
-      <label class="radio-box">
+      <label class="radio-box" v-if="pickuptype.includes(4)" @click="onClickType(4)">
           <span class="top-left">包邮</span>
-          <input type="radio" value="快递回收" name="choosetype" >
+          <input type="radio" value="快递回收" name="choosetype" :checked="submitInfo.pickuptype == 4">
           <span class="radio-context">
               <Icon icon="icon-kuaidi-" svg size="26" className="context-icon"/>
               <span class="context-text">快递回收</span>
           </span>
-          <Icon icon="icon-gouxuan" svg size="15.8" className="bottom-icon"/>
+          <Icon icon="icon-gouxuan" svg size="15.8" className="bottom-icon" v-if="submitInfo.pickuptype == 4"/>
       </label>
 
-      <div class="triangle type2"></div>
+      <div class="triangle" :style="styles"></div>
   </div>
 </template>
+<script>
+import { mapState, mapActions, mapMutations } from "vuex";
+export default {
+  computed:{
+      ...mapState({
+        cityInfo:state=>state.trade.cityInfo,
+        pickuptype:state=>state.trade.pickuptype,
+        submitInfo:state=>state.trade.submitInfo,
+      }),
+      styles() {
+          let lefts = '.62rem';
+          switch(this.submitInfo.pickuptype)  {
+              case 1:
+                lefts = '1.82rem';
+                break;
+              case 4:
+                lefts = '3rem';
+                break;
+
+          }
+          return {
+              left: lefts
+          }
+      }
+  },
+  mounted(){
+    this.A_GET_PICKUP_TYPE({"id":this.cityInfo.id,"keys":"3107234671304225693"});
+  },
+  methods:{
+    ...mapMutations(["M_UPDATE_SUBMITINFO"]),
+    ...mapActions(["A_GET_PICKUP_TYPE"]),
+    onClickType(num){
+        this.M_UPDATE_SUBMITINFO({
+            pickuptype:num
+        })
+    }
+  }
+}
+</script>
+
 <style lang="less">
 .choose-box {
   background-color: #fff;
@@ -70,7 +107,6 @@
     }
     input {
         display: none;
-
         &:checked ~ .radio-context {
             background: #FEF8CC;
         }
@@ -100,25 +136,6 @@
       left:.62rem;
       border: 6px solid transparent;
       border-bottom-color:#eee;
-
-      &.type2 {
-          left:1.82rem;
-      }
   }
 }
 </style>
-
-<script>
-// export default {
-//     data() {
-//        return {
-//            item:''
-//        }
-//     },
-//     methods:{
-//         onSelect(data) {
-//             this.item = data;
-//         }
-//     }
-// }
-</script>

@@ -5,10 +5,22 @@
     <span class="top-center">选择回收方式</span>
     <span class="top-right">
       <Icon icon="icon-chengshidingwei"  className="right-icon" size="20" color="#000"/>
-      <span class="right-span">上海</span>
+      <span class="right-span">{{cityInfo.name}}</span>
     </span>
   </div>
 </template>
+<script>
+import {mapState} from "vuex";
+export default {
+  computed:{
+    ...mapState({
+      cityInfo:state=>state.trade.cityInfo
+    })
+    
+  }
+}
+</script>
+
 <style lang="less">
 .top-box{
   width:100%;

@@ -2,17 +2,16 @@
   <div>
     <Headers></Headers>
     <Choosetype></Choosetype>
-    <Service></Service>
-    <Payee></Payee>
-    <!-- <Chooseshop></Chooseshop>
-    <Chooseaddress></Chooseaddress> -->
+    <Service v-if="submitInfo.pickuptype != 5"></Service>
+    <Payee v-if="submitInfo.pickuptype == 4"></Payee>
+    <Chooseshop v-if="submitInfo.pickuptype == 5"></Chooseshop>
+    <Chooseaddress v-if="submitInfo.pickuptype == 1"></Chooseaddress>
     <Phone></Phone>
-    <Chooseexpress></Chooseexpress>
-    <Phoneorigin></Phoneorigin>
+    <Chooseexpress v-if="submitInfo.pickuptype == 4"></Chooseexpress>
+    <Phoneorigin v-if="submitInfo.pickuptype == 4"></Phoneorigin>
     <Coupon></Coupon>
     <Order></Order>
-    <Othertext></Othertext>
-    {{a}}
+    <Othertext v-if="submitInfo.pickuptype == 4"></Othertext>
   </div>
 </template>
 <script>
@@ -46,18 +45,16 @@ export default {
   },
   computed:{
     ...mapState({
-     // a:state=>state.trade.a
+      submitInfo:state=>state.trade.submitInfo,
+      cityInfo:state=>state.trade.cityInfo
     })
   },
   mounted(){
-    //this.A_TEST()
-    // setTimeout(()=>{
-    //   this.M_TEST(2)
-    // },2000)
+    this.A_GET_SHOPLIST(this.cityInfo.id);
   },
   methods:{
     //...mapMutations(['M_TEST']),
-    //...mapActions(["A_TEST"])
+    ...mapActions(["A_GET_SHOPLIST"])
   }
 };
 </script>

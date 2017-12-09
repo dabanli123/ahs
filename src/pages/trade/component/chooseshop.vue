@@ -1,10 +1,10 @@
 <template>
     <div class="shop-box">
-        <div class="has-address">
+        <div class="has-address" v-if="submitInfo.chooseshop">
             <div class="shop-left">
                 <Icon icon="icon-xuanzemencdian" size="16" color="#999" className="shop-icon"/>
                 <div class="shop-name">
-                    <h4>上海五角场万达店</h4>
+                    <h4>{{submitInfo.chooseshop.name}}</h4>
                     <span class="distance"><span class="flag">离你最近</span>路程596米</span>
                 </div>
             </div>
@@ -13,7 +13,7 @@
                 <Icon icon="icon-jiantouptccc" size="14" color="#ccc" className="right"/>
             </div>
         </div>
-        <div class="no-address">
+        <div class="no-address" v-else>
             <div class="shop-left">
                 <Icon icon="icon-xuanzemencdian" size="16" color="#999" className="shop-icon"/>
                 <div class="shop-name">
@@ -26,6 +26,17 @@
         </div>
   </div>
 </template>
+<script>
+import { mapState } from "vuex";
+export default {
+  computed:{
+    ...mapState({
+        submitInfo:state=>state.trade.submitInfo,
+      }),
+  }
+}
+</script>
+
 <style lang="less">
 .shop-box {
   //width:100%;
@@ -34,8 +45,7 @@
   background-color: #fff;
 
   .has-address {
-    //display: flex;
-    display: none;
+    display: flex;
     .shop-left {
       width: 50%;
       height: 100%;

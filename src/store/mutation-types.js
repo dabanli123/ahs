@@ -1,1 +1,4 @@
 export const M_GET_CITY = "M_GET_CITY"
+export const M_GET_PICKUP_TYPE = "M_GET_PICKUP_TYPE"
+export const M_UPDATE_SUBMITINFO = "M_UPDATE_SUBMITINFO"
+export const M_GET_SHOPLIST = "M_GET_SHOPLIST"

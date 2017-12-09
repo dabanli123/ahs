@@ -1,9 +1,19 @@
 <template>
   <div class="service-box">
-      <span>单次上门收取服务费10元</span>
-      <span>全国快递费25元以内包邮</span>
+      <span v-if="submitInfo.pickuptype == 1">单次上门收取服务费10元</span>
+      <span v-if="submitInfo.pickuptype == 4">全国快递费25元以内包邮</span>
   </div>
 </template>
+<script>
+import { mapState } from "vuex";
+export default {
+  computed:{
+      ...mapState({
+        submitInfo:state=>state.trade.submitInfo,
+      })
+  }
+}
+</script>
 <style lang="less">
     .service-box{
         height: 0.32rem;
