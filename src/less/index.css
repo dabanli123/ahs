@@ -1,0 +1,116 @@
+@import '../iconfont/iconfont.css';
+img {
+  border: none;
+  vertical-align: top;
+}
+dd,
+dl,
+dt,
+h1,
+h2,
+h3,
+h4,
+li,
+ol,
+ul {
+  margin: 0;
+}
+li,
+ol,
+ul {
+  padding: 0;
+  list-style: none;
+}
+a,
+button {
+  color: #000;
+  text-decoration: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+}
+a,
+button,
+div,
+label,
+span {
+  -webkit-tap-highlight-color: transparent;
+}
+body,
+input,
+textarea {
+  font-size: .13rem;
+  font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", Helvetica, Arial, "Heiti SC", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+input,
+textarea {
+  outline: 0;
+  color: #8c8fa4;
+  -webkit-box-sizing: border-box;
+}
+html {
+  height: 100%;
+}
+html,
+body {
+  margin: 0 auto;
+  width: 100%;
+  height: 100%;
+  background: #f2f2f2;
+  color: #8c8fa4;
+  min-height: 100%;
+}
+body {
+  font-size: 14px;
+  line-height: 18px;
+  color: #333;
+}
+.main-continar {
+  height: 100%;
+}
+.wrap {
+  height: 100%;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+strong {
+  font-weight: 400;
+}
+@-webkit-keyframes roatate {
+  0% {
+    -webkit-transform: rotate(0);
+  }
+  25% {
+    -webkit-transform: rotate(90deg);
+  }
+  50% {
+    -webkit-transform: rotate(180deg);
+  }
+  75% {
+    -webkit-transform: rotate(270deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+@keyframes roatate {
+  0% {
+    transform: rotate(0);
+  }
+  25% {
+    transform: rotate(90deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  75% {
+    transform: rotate(270deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

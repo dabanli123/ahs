@@ -5,7 +5,7 @@
           <input type="radio" value="门店回收" name="choosetype" :checked="submitInfo.pickuptype == 5">
           <span class="radio-context">
               <Icon icon="icon-mendian" svg size="26" className="context-icon"/>
-              <span class="context-text">门店回收222</span>
+              <span class="context-text">门店回收</span>
           </span>
           <Icon icon="icon-gouxuan" svg size="15.8" className="bottom-icon" v-if="submitInfo.pickuptype == 5"/>
       </label>

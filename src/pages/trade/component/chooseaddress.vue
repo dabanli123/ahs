@@ -15,13 +15,73 @@
         </div>
         <div class="choose-time">
                 <div class="time-left">上门时间</div>
-                <div class="time-right">
-                    <span class="text">2017-04-21（周五）</span>
+                <div class="time-right" @click="onShowTimeClick">
+                    <span class="text">{{submitInfo.ondoorTime && submitInfo.ondoorTime.datestring}}</span>
                     <Icon icon="icon-jiantouptccc" size="14" color="#ccc"/>
                 </div>
         </div>
+
+        <Selectbox
+            v-if="ondoorTime"
+            :onShow="showTime" 
+            title="选择日期" 
+            type="more"
+            :items="ondoorTime" 
+            :fieldName="showTimeField"
+            @complete="onTimeComplete"
+            @hideEvent="onHide"
+            height="3rem"
+        ></Selectbox>
     </div>
 </template>
+<script>
+import { mapState,mapActions, mapMutations} from "vuex";
+export default {
+    data() {
+        return {
+            showTime: false,
+            showTimeField:[
+                {
+                    id: 'date',
+                    value: 'datestring'
+                }
+            ],
+        }
+    },
+  computed:{
+       ...mapState({
+        cityInfo:state=>state.trade.cityInfo,
+        ondoorTime:state=>state.trade.ondoorTime,
+        submitInfo:state=>state.trade.submitInfo
+      })
+  },
+  mounted(){
+    this.A_ONDOOR_TIME(this.cityInfo.id);
+  },
+  methods:{
+    ...mapActions(["A_ONDOOR_TIME"]),
+    ...mapMutations(['M_UPDATE_SUBMITINFO']),
+
+    onTimeComplete(result) {
+        this.M_UPDATE_SUBMITINFO({
+            ondoorTime:{
+                date:result[0].date,
+                datestring: result[0].datestring
+            }
+        })
+        this.showTime = false;
+
+    },
+    onHide() {
+        this.showTime = false;
+    },
+    onShowTimeClick() {
+        this.showTime = true;
+    }
+  }
+}
+</script>
+
 <style lang="less">
     .address-box{
         height: 1.68rem;

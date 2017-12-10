@@ -70,6 +70,7 @@ export default {
                 margin-right:.68rem;
             }
             input {
+                box-sizing: content-box;
                 width:100%;
                 padding:.06rem 0;
                 border:none;

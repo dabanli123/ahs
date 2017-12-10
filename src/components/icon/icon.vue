@@ -1,11 +1,8 @@
 <template>
-  <span class="comp-icon-box">
-    <i class="iconfont" :class="classes" :style="styles" v-if="!svg"></i>
-        
-    <svg class="icon bbc" :class="classes" aria-hidden="true" :style="styles" v-else>
+    <i class="iconfont" :class="classes" :style="styles" v-if="!svg" @click="onClick"></i>
+    <svg class="icon bbc" :class="classes" aria-hidden="true" :style="styles" @click="onClick" v-else>
         <use :xlink:href="'#' + icon"></use>
     </svg>
-  </span>
 </template>
 <script>
 export default {
@@ -47,11 +44,18 @@ export default {
               color: this.color
           }
       }
+  },
+  methods: {
+      onClick($event) {
+          this.$emit('click', $event);
+      }
   }
 }
 </script>
 <style lang="less">
     .comp-icon-box {
-        
+        overflow: hidden;
+        display: inline;
+        position: relative;
     }
 </style>
