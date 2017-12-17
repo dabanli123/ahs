@@ -5,7 +5,8 @@ import {
   M_UPDATE_SUBMITINFO,
   M_GET_SHOPLIST,
   M_ONDOOR_TIME,
-  M_EXPRESS_TIME
+  M_EXPRESS_TIME,
+  M_GET_USERINFO
 } from './mutation-types';
 
 import {
@@ -13,7 +14,10 @@ import {
   A_GET_PICKUP_TYPE,
   A_GET_SHOPLIST,
   A_ONDOOR_TIME,
-  A_EXPRESS_TIME
+  A_EXPRESS_TIME,
+  A_GET_MSG_CODE,
+  A_SET_LOGIN,
+  A_GET_USERINFO
 } from './action-types';
 
 
@@ -26,11 +30,13 @@ const state = {
     chooseshop: null,
     ondoorTime: null,
     expressTime: null,
-    expressDate:null
+    expressDate: null,
+    mobile: ''
   },
   shoplist: [],
   ondoorTime: [],
-  expressTime:[]
+  expressTime: [],
+  userinfo: null
 };
 
 const mutations = {
@@ -52,12 +58,21 @@ const mutations = {
   [M_EXPRESS_TIME]: (state, items) => {
     state.expressTime = items;
   },
-
+  [M_GET_USERINFO]: (state, items) => {
+    state.userinfo = items;
+  }
 
 }
 /*
- url: `/portal-api/city/pickupdates/${id}`,
- url: `/portal-api/order/express/datelist`,
+const getUserInfo = async () => {
+
+    const opts = {
+        url: '/portal-api/user',
+    }
+
+    return await Util.Request(opts, []);
+
+}
 */
 const actions = {
   [A_GET_CITY]: async ({ commit, state }, items) => {
@@ -138,29 +153,100 @@ const actions = {
     })
   },
   [A_EXPRESS_TIME]: async ({ commit, state }, items) => {
-    
-        const opts = {
-          url: `/portal-api/order/express/datelist`,
-        }
-    
-        let res;
-    
-        try {
-          res = await util.Request(opts)
-        } catch (e) {
-          console.error(e);
-          return;
-        }
-        res = res.filter(v => v.enable);
-        res.forEach(element => {
-          element.hourList = element.hourList.filter(v => v.enable);
-        });
-        commit(M_EXPRESS_TIME, res);
-        commit(M_UPDATE_SUBMITINFO, {
-          expressDate: res[0],
-          expressTime:res[0].hourList[0]
-        })
-      }
+
+    const opts = {
+      url: `/portal-api/order/express/datelist`,
+    }
+
+    let res;
+
+    try {
+      res = await util.Request(opts)
+    } catch (e) {
+      console.error(e);
+      return;
+    }
+    res = res.filter(v => v.enable);
+    res.forEach(element => {
+      element.hourList = element.hourList.filter(v => v.enable);
+    });
+    commit(M_EXPRESS_TIME, res);
+    commit(M_UPDATE_SUBMITINFO, {
+      expressDate: res[0],
+      expressTime: res[0].hourList[0]
+    })
+  },
+  [A_GET_MSG_CODE]: async ({ commit, state }, items) => {
+    let params = new URLSearchParams();
+
+    params.append('mobile', items[0]);
+    params.append('type', 'Login');
+
+    if (items[1]) {
+      params.append('imgCaptcha', items[1]);
+    }
+
+    const opts = {
+      url: '/portal-api/captcha/sendsmscaptcha',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      data: params
+    }
+
+    try {
+      await util.Request(opts, []);
+    } catch (error) {
+      console.log(error);
+      items[2] && items[2](error);
+      return;
+    }
+    items[2] && items[2]();
+  },
+  [A_SET_LOGIN]: async ({ commit, state }, items) => {
+    let params = new URLSearchParams();
+
+    for (let item in items) {
+
+      params.append(item, items[item]);
+    }
+
+    const opts = {
+      url: '/portal-user/account/loginbycaptcha',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      data: params
+    }
+
+    try {
+      return await util.Request(opts, []);
+    } catch (error) {
+      console.log(error);
+      return;
+    }
+  },
+  [A_GET_USERINFO]: async ({ commit, state }, items) => {
+    const opts = {
+      url: '/portal-api/user',
+    }
+
+    let res;
+
+    try {
+      res = await util.Request(opts)
+    } catch (e) {
+      console.error(e);
+      return;
+    }
+
+    commit(M_GET_USERINFO, res);
+    commit(M_UPDATE_SUBMITINFO, {
+      mobile: res ? res.mobile : ''
+    })
+  }
 }
 
 const getters = {

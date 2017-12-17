@@ -8,6 +8,7 @@ export default (args) => {
         Axios({
             method: args.method,
             url: args.url,
+            headers:args.headers,
             data: args.data ||""
         }).then( result => {
            

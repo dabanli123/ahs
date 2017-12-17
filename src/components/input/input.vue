@@ -3,7 +3,7 @@
       <label v-if="label">{{label}}</label>
       <div class="input-group">
           <div class="input-wrap" :style="styles2">
-              <input type="text" :value="value" :placeholder="placeholder" @input="onInput">
+              <input type="text" :value="value" :placeholder="placeholder" @input="onInput" :maxlength="maxlength" :readonly="readonly">
           </div>
       </div>
 
@@ -18,7 +18,9 @@ export default {
       label:String,
       placeholder:String,
       rightWidth: String,
-      value:String
+      value:String,
+      maxlength:String,
+      readonly:Boolean
   },
   computed: {
       styles2() {

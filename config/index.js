@@ -18,6 +18,13 @@ module.exports = {
         pathRewrite: {
           '^/portal-api': '/portal-api'
         }
+      },
+      '/portal-user': {
+        target: 'http://m.aihuishou.com',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/portal-user': '/portal-user'
+        }
       }
     },
 
@@ -36,6 +43,7 @@ module.exports = {
     // If true, eslint errors and warings will also be shown in the error overlay
     // in the browser.
     showEslintErrorsInOverlay: false,
+    disableHostCheck:true,
 
     /**
      * Source Maps

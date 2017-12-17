@@ -51,10 +51,11 @@ export default {
   },
   mounted(){
     this.A_GET_SHOPLIST(this.cityInfo.id);
+    this.A_GET_USERINFO();
   },
   methods:{
     //...mapMutations(['M_TEST']),
-    ...mapActions(["A_GET_SHOPLIST"])
+    ...mapActions(["A_GET_SHOPLIST","A_GET_USERINFO"])
   }
 };
 </script>

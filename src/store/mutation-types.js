@@ -4,3 +4,5 @@ export const M_UPDATE_SUBMITINFO = "M_UPDATE_SUBMITINFO"
 export const M_GET_SHOPLIST = "M_GET_SHOPLIST"
 export const M_ONDOOR_TIME = "M_ONDOOR_TIME"
 export const M_EXPRESS_TIME = "M_EXPRESS_TIME"
+export const M_GET_USERINFO = "M_GET_USERINFO"
+

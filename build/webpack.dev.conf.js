@@ -32,7 +32,8 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     quiet: true, // necessary for FriendlyErrorsPlugin
     watchOptions: {
       poll: config.dev.poll,
-    }
+    },
+    disableHostCheck:true,
   },
   plugins: [
     new webpack.DefinePlugin({
@@ -74,7 +75,7 @@ module.exports = new Promise((resolve, reject) => {
 
       resolve(devWebpackConfig)
 
-      opn(`http://${config.dev.host}:${port}`);
+      opn(`http://test.aihuishou.com:${port}`);
     }
   })
 })
