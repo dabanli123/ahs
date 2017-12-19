@@ -11,7 +11,7 @@
                     <Icon icon="icon-jiantou_down" size="14" color="#ccc"/>
                 </div>
             </div>
-            <div class="order-right">
+            <div class="order-right" @click="onSubmitOrder">
                 提交订单
             </div>
         </div>
@@ -40,12 +40,81 @@
         </div>
   </div>
 </template>
+<script>
+import { mapState, mapActions } from "vuex";
+import Util from "../../../utils/index.js";
+export default {
+  computed: {
+    ...mapState({
+      cityInfo: state => state.trade.cityInfo,
+      submitInfo: state => state.trade.submitInfo
+    })
+  },
+  methods: {
+    ...mapActions(["A_SUBMIT_ORDER"]),
+    onSubmitOrder() {
+       
+      let req = {
+        mobile: this.submitInfo.mobile,
+        paymentType: 15,
+        pickuptype: this.submitInfo.pickuptype,
+        regionId: this.cityInfo.id,
+        inquiries: [{
+          inquiryKey: Util.getQueryString("fastorderkey"),
+          coupon: ""
+        }]
+      };
+      //门店
+      if (this.submitInfo.pickuptype == 5) {
+        req["shopid"] = this.submitInfo.chooseshop.id;
+      }
+      //上门
+      if(this.submitInfo.pickuptype == 1) {
+        req['address'] = this.submitInfo.street + this.submitInfo.house;
+        req['pickupDate'] = this.submitInfo.ondoorTime.date;
+      }
+      //快递
+      if(this.submitInfo.pickuptype == 4) {
+        req['contact'] = this.submitInfo.contact;
+        req['customerExpress'] = Boolean(Number(this.submitInfo.customerExpress));
+        
+        if(!req['customerExpress']) {
+          req['regionId'] = this.submitInfo.regionId;
+          req['address'] = this.submitInfo.regiontext + this.submitInfo.address;
+          req['pickupDate'] = this.submitInfo.expressDate.date +' '+this.submitInfo.expressTime.hour +':00';
+        }
+
+        req['productSource'] = this.submitInfo.from;
+
+        //去掉了其他
+        // if(this.submitInfo.from == '其他') {
+        //   req['productSource'] = this.submitInfo.productSource;
+        // }else {
+        //   req['productSource'] = this.submitInfo.from;
+        // }
+      }
+
+
+      this.A_SUBMIT_ORDER([req,(res)=>{
+          console.log(res)
+          this.$Alert({
+            message: '提交成功',
+            confirmBtnCallback: ()=>{
+                window.location.href = 'http://m.aihuishou.com/m/index.html#/success?order=' + res + '&recycletype=5'
+            }, 
+       });
+      }])
+    }
+  }
+};
+</script>
+
 <style lang="less">
-@import '../../../styles/function.less';
+@import "../../../styles/function.less";
 .order-box {
   position: absolute;
   bottom: 0;
-  
+
   width: 100%;
   .order {
     display: flex;
@@ -99,65 +168,64 @@
       color: #333;
     }
   }
-  .order-detail{
-      display: none;
-      height:2.4rem;
-      background: #fff;
-      .detail-top{
-          height: 0.44rem;
-          line-height: .44rem;
-          position: relative;
-          display: flex;
-          .retina-border();
-          .detail-title{
-              text-align: center;
-              flex:1;
-          }
-          .detail-close{
-              width:.2rem;
-              position: absolute;
-              right:.15rem;
-          }
+  .order-detail {
+    display: none;
+    height: 2.4rem;
+    background: #fff;
+    .detail-top {
+      height: 0.44rem;
+      line-height: 0.44rem;
+      position: relative;
+      display: flex;
+      .retina-border();
+      .detail-title {
+        text-align: center;
+        flex: 1;
       }
-      .detail-context{
-          //border:1px solid red;
-          position: relative;
-          .context-list{
-              margin: .16rem 0 .16rem .15rem;
-              //border-bottom: 1px solid #ddd;
-               position: relative;
+      .detail-close {
+        width: 0.2rem;
+        position: absolute;
+        right: 0.15rem;
+      }
+    }
+    .detail-context {
+      //border:1px solid red;
+      position: relative;
+      .context-list {
+        margin: 0.16rem 0 0.16rem 0.15rem;
+        //border-bottom: 1px solid #ddd;
+        position: relative;
 
-              .retina-border();
-              .list{
-                  position: relative;
-                  padding-bottom: .12rem;
-                  font-size: 13px;
-                  color:#333;
-                  &:last-child{
-                      padding-bottom:none;
-                  }
-                  span{
-                      display: inline-block;
-                      line-height: .17rem;
-                  }
-                  .right{
-                      position: absolute;
-                      right:.15rem;
-                  }
-              }
+        .retina-border();
+        .list {
+          position: relative;
+          padding-bottom: 0.12rem;
+          font-size: 13px;
+          color: #333;
+          &:last-child {
+            padding-bottom: none;
           }
-          .context-total{
-              font-size:13px;
-              color: #333;
-              position: relative;
-              //top: .16rem;
-              right: -2.43rem;
-              .total-price{
-                  color: #FC6232;
-              }
+          span {
+            display: inline-block;
+            line-height: 0.17rem;
           }
+          .right {
+            position: absolute;
+            right: 0.15rem;
+          }
+        }
       }
+      .context-total {
+        font-size: 13px;
+        color: #333;
+        position: relative;
+        //top: .16rem;
+        right: -2.43rem;
+        .total-price {
+          color: #fc6232;
+        }
+      }
+    }
   }
 }
-
 </style>

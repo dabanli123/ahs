@@ -17,7 +17,8 @@ import {
   A_EXPRESS_TIME,
   A_GET_MSG_CODE,
   A_SET_LOGIN,
-  A_GET_USERINFO
+  A_GET_USERINFO,
+  A_SUBMIT_ORDER
 } from './action-types';
 
 
@@ -31,7 +32,15 @@ const state = {
     ondoorTime: null,
     expressTime: null,
     expressDate: null,
-    mobile: ''
+    mobile: '',
+    street:'莱阳新家园',
+    house:'利津路185弄',
+    contact:'测试',
+    customerExpress:1,
+    regiontext:'abc',
+    address:'bbc',
+    regionId:3,
+    from:'自购'
   },
   shoplist: [],
   ondoorTime: [],
@@ -64,17 +73,31 @@ const mutations = {
 
 }
 /*
-const getUserInfo = async () => {
-
-    const opts = {
-        url: '/portal-api/user',
+ const opts = {
+        url: `/portal-api/order/submit`,
+        method: 'POST',
+        params: { ...args }
     }
 
-    return await Util.Request(opts, []);
-
-}
 */
 const actions = {
+  [A_SUBMIT_ORDER]: async ({ commit, state }, items) => {
+    const opts = {
+      url: '/portal-api/order/submit',
+      method: 'POST',
+      data: items[0]
+    }
+
+    let res;
+    try {
+      res = await util.Request(opts, []);
+    } catch (error) {
+      console.log(error);
+      items[1] && items[1](error);
+      return;
+    }
+    items[1] && items[1](res);
+  },
   [A_GET_CITY]: async ({ commit, state }, items) => {
     const opts = {
       url: '/portal-api/user/city',

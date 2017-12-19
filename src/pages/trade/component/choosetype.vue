@@ -35,6 +35,7 @@
 </template>
 <script>
 import { mapState, mapActions, mapMutations } from "vuex";
+import Util from '../../../utils/index.js'
 export default {
   computed:{
       ...mapState({
@@ -59,7 +60,9 @@ export default {
       }
   },
   mounted(){
-    this.A_GET_PICKUP_TYPE({"id":this.cityInfo.id,"keys":"3107234671304225693"});
+      let keys = Util.getQueryString('fastorderkey');
+      //keys = keys.map(v => )
+    this.A_GET_PICKUP_TYPE({"id":this.cityInfo.id,"keys":'inquirykeys=' + Util.getQueryString('fastorderkey')});
   },
   methods:{
     ...mapMutations(["M_UPDATE_SUBMITINFO"]),
