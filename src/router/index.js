@@ -14,17 +14,17 @@ export default new Router({
       name: 'index',
       component: index
     },
-    // {
-    //   path: '/trade',
-    //   name: 'trade',
-    //   component: () => import('@/pages/trade/page'),
-    //   children:[
-    //     {
-    //       path:'index',
-    //       component: () => import('@/pages/trade/index'),
-    //     }
-    //   ]
-    // },
+    {
+      path: '/trade',
+      name: 'trade',
+      component: () => import('@/pages/trade/page'),
+      children:[
+        {
+          path:'index',
+          component: () => import('@/pages/trade/index'),
+        }
+      ]
+    },
     {
       path: '/shop',
       name: 'shop',

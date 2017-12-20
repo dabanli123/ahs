@@ -1,6 +1,7 @@
 import Request from './request.js';
-import {getQueryString} from './function.js'
+import {getQueryString,getLocation} from './function.js'
 export default {
     getQueryString,
     Request,
+    getLocation
 }

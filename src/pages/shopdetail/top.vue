@@ -1,5 +1,5 @@
 <template>
-    <div class="top-box">
+    <div class="shop-detail-top-box">
         <Icon icon="icon-jiantouptccc"  className="top-left" size="12" color="#000"/>
         <div class="top-center">
             <span class="shop-msg action">门店信息</span><span class="shop-map">门店地图</span>
@@ -7,7 +7,7 @@
     </div>
 </template>
 <style lang="less">
-.top-box {
+.shop-detail-top-box {
   height: 0.44rem;
   background: #fff;
   line-height: 0.44rem;

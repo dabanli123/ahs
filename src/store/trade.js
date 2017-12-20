@@ -6,7 +6,8 @@ import {
   M_GET_SHOPLIST,
   M_ONDOOR_TIME,
   M_EXPRESS_TIME,
-  M_GET_USERINFO
+  M_GET_USERINFO,
+  M_GET_LOCATION
 } from './mutation-types';
 
 import {
@@ -18,7 +19,8 @@ import {
   A_GET_MSG_CODE,
   A_SET_LOGIN,
   A_GET_USERINFO,
-  A_SUBMIT_ORDER
+  A_SUBMIT_ORDER,
+  A_GET_LOCATION
 } from './action-types';
 
 
@@ -45,7 +47,8 @@ const state = {
   shoplist: [],
   ondoorTime: [],
   expressTime: [],
-  userinfo: null
+  userinfo: null,
+  location:null
 };
 
 const mutations = {
@@ -69,6 +72,9 @@ const mutations = {
   },
   [M_GET_USERINFO]: (state, items) => {
     state.userinfo = items;
+  },
+  [M_GET_LOCATION]: (state, items) => {
+    state.location = items;
   }
 
 }
@@ -81,6 +87,18 @@ const mutations = {
 
 */
 const actions = {
+  [A_GET_LOCATION]: async ({ commit, state }, items) => {
+   
+    let res;
+    try {
+      res = await util.getLocation();
+    } catch (error) {
+      console.log(error);
+      return;
+    }
+
+    commit(M_GET_LOCATION, res);
+  },
   [A_SUBMIT_ORDER]: async ({ commit, state }, items) => {
     const opts = {
       url: '/portal-api/order/submit',

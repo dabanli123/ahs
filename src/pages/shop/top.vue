@@ -11,6 +11,7 @@
     background-color: #fff;
     line-height: 0.44rem;
     position: relative;
+    z-index: 10;
     .top-left {
       margin-left: 0.15rem;
       display: inline-block;
