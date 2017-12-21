@@ -2,10 +2,28 @@
     <div class="shop-detail-top-box">
         <Icon icon="icon-jiantouptccc"  className="top-left" size="12" color="#000"/>
         <div class="top-center">
-            <span class="shop-msg action">门店信息</span><span class="shop-map">门店地图</span>
+            <span class="shop-msg" :class="{action:isShow == 1}"  @click="onShowMsg">门店信息</span><span class="shop-map" :class="{action:isShow==2}"  @click="onShowMap">门店地图</span>
         </div>
     </div>
 </template>
+<script>
+export default {
+  data(){
+      return {
+          isShow:1
+      }
+  },
+  methods:{
+      onShowMsg() {
+          this.isShow = 1;
+      },
+      onShowMap() {
+          this.isShow = 2;
+      }
+  }
+}
+</script>
+
 <style lang="less">
 .shop-detail-top-box {
   height: 0.44rem;

@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import index from '@/shou/cindex'
 import shop from '@/pages/shop/shop'
 import shopdetail from '@/pages/shopdetail/detail'
+import address from '@/pages/address/address'
 
 
 Vue.use(Router)
@@ -35,6 +36,12 @@ export default new Router({
       path: '/shopdetail',
       name: 'shopdetail',
       component: shopdetail,
+      
+    },
+    {
+      path: '/address',
+      name: 'address',
+      component: address,
       
     }
   ]
