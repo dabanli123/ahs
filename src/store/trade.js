@@ -7,7 +7,9 @@ import {
   M_ONDOOR_TIME,
   M_EXPRESS_TIME,
   M_GET_USERINFO,
-  M_GET_LOCATION
+  M_GET_LOCATION,
+  M_GET_REGION,
+  M_UPDATE_FILTERSHOP
 } from './mutation-types';
 
 import {
@@ -20,7 +22,8 @@ import {
   A_SET_LOGIN,
   A_GET_USERINFO,
   A_SUBMIT_ORDER,
-  A_GET_LOCATION
+  A_GET_LOCATION,
+  A_GET_REGION
 } from './action-types';
 
 
@@ -45,10 +48,12 @@ const state = {
     from:'自购'
   },
   shoplist: [],
+  filtershop:[],
   ondoorTime: [],
   expressTime: [],
   userinfo: null,
-  location:null
+  location:null,
+  regionlist:[]
 };
 
 const mutations = {
@@ -75,18 +80,43 @@ const mutations = {
   },
   [M_GET_LOCATION]: (state, items) => {
     state.location = items;
-  }
+  },
+  [M_GET_REGION]: (state, items) => {
+    state.regionlist = items;
+  },
+  [M_UPDATE_FILTERSHOP]: (state, items) => {
+    state.filtershop = items;
+  },
 
 }
 /*
- const opts = {
-        url: `/portal-api/order/submit`,
-        method: 'POST',
-        params: { ...args }
+ const getCityRegions = async (cityid) => {
+
+    const opts = {
+        url: `/portal-api/city/regions/${cityid}`,
     }
+    return await Util.Request(opts);
+
+}
 
 */
 const actions = {
+  [A_GET_REGION]: async ({ commit, state }, items) => {
+    const opts = {
+      url: `/portal-api/city/regions/${items}`,
+    }
+
+    let res;
+
+    try {
+      res = await util.Request(opts)
+    } catch (e) {
+      console.error(e);
+      return;
+    }
+
+    commit(M_GET_REGION, res);
+  },
   [A_GET_LOCATION]: async ({ commit, state }, items) => {
    
     let res;
@@ -171,7 +201,8 @@ const actions = {
     commit(M_GET_SHOPLIST, res);
     commit(M_UPDATE_SUBMITINFO, {
       chooseshop: res[0]
-    })
+    });
+    commit(M_UPDATE_FILTERSHOP, res)
   },
   [A_ONDOOR_TIME]: async ({ commit, state }, items) => {
 

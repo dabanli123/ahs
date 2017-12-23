@@ -1,6 +1,6 @@
 <template>
     <div class="shoplist-box">
-        <div class="shop-list">
+        <div class="shop-list" v-for="(item, index) in filtershop" :key="index">
             <div class="shop-detail">
                 <div class="choose-shop">
                     <div class="circle"></div>
@@ -8,48 +8,22 @@
                 </div>
                 <div class="shop-msg">
                     <div class="shop-head">
-                        <div class="shop-title">五角场万达店<span>最近</span></div>
+                        <div class="shop-title">{{item.name}}<span>最近</span></div>
                         <div class="on-right">
                             <span>330m</span>
                             <Icon icon="icon-jiantouptccc"  className="top-left" size="14" color="#999"/>
                         </div>
                         
                     </div>
-                    <div class="shop-address">淞沪路77号万达广场地下一层（ZARA旁）商场地下一层</div>
+                    <div class="shop-address">{{item.address}}</div>
                 </div>
             </div>
             <div class="shop-contact">
                 <div class="shop-tel">
-                    <Icon icon="icon-lianximendian" size="14" color="#666"/>
-                    <span>联系门店</span>
-                </div>
-                <div class="shop-map">
-                    <Icon icon="icon-chakanditu1"  size="14" color="#666"/>
-                    <span>查看地图</span>
-                </div>
-            </div>
-        </div>
-        <div class="shop-list">
-            <div class="shop-detail">
-                <div class="choose-shop">
-                    <div class="circle" style="display:block;"></div>
-                </div>
-                <div class="shop-msg">
-                    <div class="shop-head">
-                        <div class="shop-title">五角场万达店<span>最近</span></div>
-                        <div class="on-right">
-                            <span>330m</span>
-                            <Icon icon="icon-jiantouptccc"  className="top-left" size="14" color="#999"/>
-                        </div>
-                        
-                    </div>
-                    <div class="shop-address">淞沪路77号万达广场地下一层</div>
-                </div>
-            </div>
-            <div class="shop-contact">
-                <div class="shop-tel">
-                    <Icon icon="icon-lianximendian" size="14" color="#666"/>
-                    <span>联系门店</span>
+                    <a :href="'tel:'+item.mobile">
+                        <Icon icon="icon-lianximendian" size="14" color="#666"/>
+                        <span>联系门店</span>
+                    </a>
                 </div>
                 <div class="shop-map">
                     <Icon icon="icon-chakanditu1"  size="14" color="#666"/>
@@ -60,6 +34,27 @@
     </div>
   
 </template>
+<script>
+import {mapState, mapMutations, mapActions} from "vuex"; 
+
+export default {
+  computed:{
+    ...mapState({
+      filtershop:state=>state.trade.filtershop,
+      // cityInfo:state=>state.trade.cityInfo
+    })
+  },
+  mounted(){
+    // this.A_GET_SHOPLIST(this.cityInfo.id);
+    // this.A_GET_USERINFO();
+  },
+  methods:{
+    //...mapMutations(['M_TEST']),
+    // ...mapActions(["A_GET_SHOPLIST"])
+  }
+};
+</script>
+
 <style lang="less">
 .shoplist-box {
   .shop-list {
@@ -121,6 +116,10 @@
       color: #666;
       .shop-tel {
         width: 1.72rem;
+        a{
+            text-decoration: none;
+            color:#666;
+        }
       }
       .shop-map {
         width: 1.72rem;

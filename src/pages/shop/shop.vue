@@ -13,12 +13,26 @@
 import Region from "./region.vue";
 import Top from "./top.vue";
 import ShopList from "./shoplist.vue";
+import {mapState, mapMutations, mapActions} from "vuex"; 
 
 export default {
   components: {
     Top,
     Region,
     ShopList
+  },
+  computed:{
+    ...mapState({
+      // submitInfo:state=>state.trade.submitInfo,
+      cityInfo:state=>state.trade.cityInfo
+    })
+  },
+  mounted(){
+    this.A_GET_SHOPLIST(this.cityInfo.id);
+    this.A_GET_REGION(this.cityInfo.id);
+  },
+  methods:{
+    ...mapActions(["A_GET_SHOPLIST","A_GET_REGION"])
   }
 };
 </script>
