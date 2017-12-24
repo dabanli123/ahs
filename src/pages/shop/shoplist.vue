@@ -1,12 +1,12 @@
 <template>
     <div class="shoplist-box">
-        <div class="shop-list" v-for="(item, index) in filtershop" :key="index">
+        <div class="shop-list" v-for="(item, index) in filtershop" :key="index" >
             <div class="shop-detail">
-                <div class="choose-shop">
-                    <div class="circle"></div>
-                    <Icon icon="icon-xuanze" svg size="18" color="#000"/>
+                <div class="choose-shop" @click="goBack(item)">
+                    <div class="circle" v-if="item.id != submitInfo.chooseshop.id"></div>
+                    <Icon icon="icon-xuanze" svg size="18" color="#000" v-else/>
                 </div>
-                <div class="shop-msg">
+                <div class="shop-msg" @click="goShopDetail(item)">
                     <div class="shop-head">
                         <div class="shop-title">{{item.name}}<span>最近</span></div>
                         <div class="on-right">
@@ -41,16 +41,24 @@ export default {
   computed:{
     ...mapState({
       filtershop:state=>state.trade.filtershop,
-      // cityInfo:state=>state.trade.cityInfo
+      submitInfo:state=>state.trade.submitInfo
     })
   },
   mounted(){
-    // this.A_GET_SHOPLIST(this.cityInfo.id);
-    // this.A_GET_USERINFO();
+    
   },
   methods:{
-    //...mapMutations(['M_TEST']),
+    ...mapMutations(['M_UPDATE_SUBMITINFO']),
     // ...mapActions(["A_GET_SHOPLIST"])
+    goBack(item){
+      this.M_UPDATE_SUBMITINFO({
+        chooseshop:item
+      })
+      this.$router.back();
+    },
+    goShopDetail(item){
+      this.$router.push('/shopdetail?id='+item.id);
+    }
   }
 };
 </script>
@@ -73,7 +81,7 @@ export default {
           height: 0.17rem;
           border: 1px solid #ccc;
           border-radius: 50%;
-          display: none;
+          // display: none;
         }
       }
       .shop-msg {

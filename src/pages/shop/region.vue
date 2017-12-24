@@ -5,10 +5,11 @@
                 <span :class="{'action': chooseId == 0}" @click="selectRegion(0)">全部({{shoplist.length}})</span><span v-for="item in regionlist" :key="item.id" @click="selectRegion(item.id)" :class="{'action': chooseId == item.id}">{{item.name}}({{getShopLength(item.id)}})</span>
             </template>
             <span v-else>全部门店</span>
-             <div class="choose-more" @click="onToggle" :class="{rotate:isShow}">
+            
+        </div>
+         <div class="choose-more" @click="onToggle" :class="{rotate:isShow}">
                 <Icon icon="icon-jiantou_ptdown" size="14" color="#999" className="choose-more-icon"/>
             </div>
-        </div>
 
         <div class="region-look" :class="{show:isShow}">
             <span :class="{'action': chooseId == 0}"  @click="selectRegion(0)">全部</span>
@@ -96,14 +97,16 @@ export default {
         left: 0;
       }
     }
-    .choose-more {
+   
+  }
+   .choose-more {
       width: 0.4rem;
       height: 0.4rem;
       background: #ffffff;
-      position: fixed;
-      top: 0.44rem;
+      position: absolute;
+      top: 0;
       right: 0;
-      z-index: 2;
+      z-index: 11;
       line-height: 0.4rem;
       text-align: center;
       //box-shadow: -1px 0px 20px #ccc;
@@ -133,7 +136,6 @@ export default {
         }
       }
     }
-  }
 
   .region-look {
     background: #fff;

@@ -5,7 +5,7 @@
         <ShopList></ShopList>
         
         <div class="check-shop">
-            已选择-上海五角场门店
+            已选择-{{submitInfo.chooseshop.name}}
         </div>
     </div>
 </template>
@@ -14,6 +14,7 @@ import Region from "./region.vue";
 import Top from "./top.vue";
 import ShopList from "./shoplist.vue";
 import {mapState, mapMutations, mapActions} from "vuex"; 
+import Util from "../../utils";
 
 export default {
   components: {
@@ -23,16 +24,33 @@ export default {
   },
   computed:{
     ...mapState({
-      // submitInfo:state=>state.trade.submitInfo,
-      cityInfo:state=>state.trade.cityInfo
+      shoplist:state=>state.trade.shoplist,
+      cityInfo:state=>state.trade.cityInfo,
+      submitInfo:state=>state.trade.submitInfo
     })
   },
-  mounted(){
-    this.A_GET_SHOPLIST(this.cityInfo.id);
+  async mounted(){
+    await this.A_GET_SHOPLIST(this.cityInfo.id);
     this.A_GET_REGION(this.cityInfo.id);
+    
+    let id =  Util.getQueryString('id');
+    this.shoplist.forEach(v => {
+      if(v.id == id){
+        this.M_UPDATE_SUBMITINFO({
+          chooseshop:v
+        });
+      }
+    });
   },
   methods:{
-    ...mapActions(["A_GET_SHOPLIST","A_GET_REGION"])
+    ...mapActions(["A_GET_SHOPLIST","A_GET_REGION"]),
+     ...mapMutations(['M_UPDATE_SUBMITINFO']),
+    // ...mapActions(["A_GET_SHOPLIST"])
+    
+      // this.M_UPDATE_SUBMITINFO({
+      //   chooseshop:item
+      // })
+      
   }
 };
 </script>

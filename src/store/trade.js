@@ -90,10 +90,10 @@ const mutations = {
 
 }
 /*
- const getCityRegions = async (cityid) => {
+const getShopDetail = async (id) => {
 
     const opts = {
-        url: `/portal-api/city/regions/${cityid}`,
+        url: `/portal-api/shop/${id}`,
     }
     return await Util.Request(opts);
 
@@ -199,9 +199,10 @@ const actions = {
     }
 
     commit(M_GET_SHOPLIST, res);
+    if(!state.submitInfo.chooseshop){
     commit(M_UPDATE_SUBMITINFO, {
       chooseshop: res[0]
-    });
+    });}
     commit(M_UPDATE_FILTERSHOP, res)
   },
   [A_ONDOOR_TIME]: async ({ commit, state }, items) => {

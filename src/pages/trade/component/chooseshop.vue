@@ -1,5 +1,5 @@
 <template>
-    <div class="shop-box">
+    <div class="shop-box" @click="goShop">
         <div class="has-address" v-if="submitInfo.chooseshop">
             <div class="shop-left">
                 <Icon icon="icon-xuanzemencdian" size="16" color="#999" className="shop-icon"/>
@@ -33,6 +33,11 @@ export default {
     ...mapState({
         submitInfo:state=>state.trade.submitInfo,
       }),
+  },
+  methods:{
+    goShop(){
+      this.$router.push('/shop?id='+this.submitInfo.chooseshop.id)
+    }
   }
 }
 </script>
