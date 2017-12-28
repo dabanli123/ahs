@@ -1,32 +1,36 @@
 <template>
     <div class="nearshop-box">
         <div class="nearshop-title">附近门店</div>
-        <div class="nearshop-list">
+        <div class="nearshop-list" v-for="(item, index) in shoplist.slice(0, 3)" :key="index" >
             <div class="nearshop-msg">
-                <div class="shop-name">五角场万达店</div>
-                <div class="shop-address">上海市杨浦区淞沪路433号6号楼12F</div>
+                <div class="shop-name">{{item.name}}</div>
+                <div class="shop-address">{{item.address}}</div>
                 <div class="shop-distance">路程588米</div>
             </div>
-            <div class="nearshop-btn">选择此店</div>
-        </div>
-        <div class="nearshop-list">
-            <div class="nearshop-msg">
-                <div class="shop-name">五角场万达店</div>
-                <div class="shop-address">上海市杨浦区淞沪路433号6号楼12F我是第二行我是第二行我是第二行</div>
-                <div class="shop-distance">路程588米</div>
-            </div>
-            <div class="nearshop-btn">选择此店</div>
-        </div>
-        <div class="nearshop-list">
-            <div class="nearshop-msg">
-                <div class="shop-name">五角场万达店</div>
-                <div class="shop-address">上海市杨浦区淞沪路433号6号楼12F</div>
-                <div class="shop-distance">路程588米</div>
-            </div>
-            <div class="nearshop-btn">选择此店</div>
+            <div class="nearshop-btn" @click="goBack(item)">选择此店</div>
         </div>
     </div>
 </template>
+<script>
+import { mapState, mapMutations } from "vuex";
+export default {
+  computed: {
+    ...mapState({
+      shoplist: state => state.trade.shoplist
+    })
+  },
+  methods: {
+      ...mapMutations(['M_UPDATE_SUBMITINFO']),
+    
+    goBack(item) {
+      this.M_UPDATE_SUBMITINFO({
+        chooseshop: item
+      });
+      this.$router.go(-2);
+    }
+  }
+};
+</script>
 <style lang="less">
 .nearshop-box {
   height: auto;

@@ -9,7 +9,10 @@ import {
   M_GET_USERINFO,
   M_GET_LOCATION,
   M_GET_REGION,
-  M_UPDATE_FILTERSHOP
+  M_UPDATE_FILTERSHOP,
+  M_GET_SHOP_DETAIL,
+  M_GET_USER_COUNT,
+  M_GET_USER_COMMENT
 } from './mutation-types';
 
 import {
@@ -23,7 +26,10 @@ import {
   A_GET_USERINFO,
   A_SUBMIT_ORDER,
   A_GET_LOCATION,
-  A_GET_REGION
+  A_GET_REGION,
+  A_GET_SHOP_DETAIL,
+  A_GET_USER_COUNT,
+  A_GET_USER_COMMENT
 } from './action-types';
 
 
@@ -53,7 +59,10 @@ const state = {
   expressTime: [],
   userinfo: null,
   location:null,
-  regionlist:[]
+  regionlist:[],
+  shopdetail:[],
+  userCount:null,
+  userComment:[]
 };
 
 const mutations = {
@@ -87,20 +96,79 @@ const mutations = {
   [M_UPDATE_FILTERSHOP]: (state, items) => {
     state.filtershop = items;
   },
-
+  [M_GET_SHOP_DETAIL]: (state, items) => {
+    state.shopdetail = items;
+  },
+  [M_GET_USER_COUNT]: (state, items) => {
+    state.userCount = items;
+  },
+  [M_GET_USER_COMMENT]: (state, items) => {
+    state.userComment = items;
+  }
 }
 /*
-const getShopDetail = async (id) => {
-
-    const opts = {
-        url: `/portal-api/shop/${id}`,
+   let opts = {
+        url:`/portal-api/user/total/count`,
     }
+
     return await Util.Request(opts);
+
+ const opts = {
+        url: `/portal-api/user/comment/search?pageIndex=${pageIndex}&pageSize=${pageSize}`,
+    }
 
 }
 
 */
 const actions = {
+  [A_GET_USER_COUNT]: async ({ commit, state }, items) => {
+    const opts = {
+      url: `/portal-api/user/total/count`,
+    }
+
+    let res;
+
+    try {
+      res = await util.Request(opts)
+    } catch (e) {
+      console.error(e);
+      return;
+    }
+
+    commit(M_GET_USER_COUNT, res);
+  },
+  [A_GET_USER_COMMENT]: async ({ commit, state }, items) => {
+    const opts = {
+      url: `/portal-api/user/comment/search?pageIndex=${0}&pageSize=${10}`,
+    }
+
+    let res;
+
+    try {
+      res = await util.Request(opts)
+    } catch (e) {
+      console.error(e);
+      return;
+    }
+
+    commit(M_GET_USER_COMMENT, res);
+  },
+  [A_GET_SHOP_DETAIL]: async ({ commit, state }, items) => {
+    const opts = {
+      url: `/portal-api/shop/${items}`,
+    }
+
+    let res;
+
+    try {
+      res = await util.Request(opts)
+    } catch (e) {
+      console.error(e);
+      return;
+    }
+
+    commit(M_GET_SHOP_DETAIL, res);
+  },
   [A_GET_REGION]: async ({ commit, state }, items) => {
     const opts = {
       url: `/portal-api/city/regions/${items}`,

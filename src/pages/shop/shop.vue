@@ -5,7 +5,7 @@
         <ShopList></ShopList>
         
         <div class="check-shop">
-            已选择-{{submitInfo.chooseshop.name}}
+            已选择-{{submitInfo.chooseshop && submitInfo.chooseshop.name}}
         </div>
     </div>
 </template>

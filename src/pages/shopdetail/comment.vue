@@ -3,7 +3,7 @@
         <div class="comment-user-box">
             <div class="comment-user-img"></div>
             <div class="comment-user">
-                <div class="user-tel">138****6831</div>
+                <div class="user-tel">{{userComment[0] && userComment[0].mobile}}</div>
                 <div class="user-comment">
                     <span>评分</span>
                     <span class="write-star">
@@ -17,15 +17,26 @@
             </div>
         </div>
         <div class="comment-text">
-            念完哈佛念阿弥陀佛念完哈佛念阿弥陀佛念完哈佛念阿弥陀佛念完哈佛念阿弥陀佛念完哈佛念阿弥陀佛…
+            {{userComment[0] && userComment[0].content}}
         </div>
         <div class="comment-time-address">
-            2月17日 17:09  在上海虹口龙之梦店回收一台
-            <div class="comment-phone">苹果iPhone 6 Plus</div>
+          {{userComment[0] && userComment[0].createDt}}
+            <!-- 2月17日 17:09  在上海虹口龙之梦店回收一台 -->
+            <div class="comment-phone">{{userComment[0] && userComment[0].productName}}</div>
         </div>
         <div class="comment-more">查看更多</div>
     </div>
 </template>
+<script>
+import { mapState } from "vuex";
+export default {
+  computed: {
+    ...mapState({
+      userComment: state => state.trade.userComment
+    })
+  }
+};
+</script>
 <style lang="less">
 .comment-box {
   height: auto;

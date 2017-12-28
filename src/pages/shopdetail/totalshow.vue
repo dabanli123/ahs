@@ -1,16 +1,26 @@
 <template>
     <div class="total-box">
         <div class="total-small-box">
-            <span>我们的用户</span><span class="total-num">92,339,197</span>
+            <span>我们的用户</span><span class="total-num">{{userCount && userCount.userCount}}</span>
         </div>
         <div class="total-small-box">
-            <span>好评率反馈</span><span class="total-num">99.5%</span>
+            <span>好评率反馈</span><span class="total-num">{{userCount && userCount.rank*100}}%</span>
         </div>
         <div class="total-small-box">
-            <span>回收机器量</span><span class="total-num">151,466,039</span>
+            <span>回收机器量</span><span class="total-num">{{userCount && userCount.orderCount}}</span>
         </div>
     </div>
 </template>
+<script>
+import { mapState } from "vuex";
+export default {
+  computed: {
+    ...mapState({
+      userCount: state => state.trade.userCount
+    })
+  }
+};
+</script>
 <style lang="less">
 .total-box {
   margin-top: 0.08rem;
