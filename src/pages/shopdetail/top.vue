@@ -7,18 +7,28 @@
     </div>
 </template>
 <script>
+import Util from '../../utils/index.js';
 export default {
   data(){
       return {
           isShow:1
       }
   },
+  mounted() {
+      let type = Util.getQueryString("type");
+
+      if(type && type == '2') {
+        this.isShow = 2;
+      }
+  },
   methods:{
       onShowMsg() {
           this.isShow = 1;
+          this.$emit('changeShowType', 1)
       },
       onShowMap() {
           this.isShow = 2;
+          this.$emit('changeShowType', 2)
       }
   }
 }

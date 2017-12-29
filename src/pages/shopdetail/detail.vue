@@ -1,11 +1,13 @@
 <template>
     <div class="list-box">
-        <Top></Top>
-        <ShopMsg></ShopMsg>
-        <TotalShow></TotalShow>
-        <Comment></Comment>
-        <NearShop></NearShop>
-        <!-- <ShopMap></ShopMap> -->
+        <Top @changeShowType="changeShowType"></Top>
+        <template v-if="showType == 1">  
+          <ShopMsg></ShopMsg>
+          <TotalShow></TotalShow>
+          <Comment></Comment>
+          <NearShop></NearShop>
+        </template>
+        <ShopMap v-else></ShopMap>
     </div>
 </template>
 <script>
@@ -18,6 +20,11 @@ import ShopMap from './map.vue';
 import Util from '../../utils/index.js';
 import { mapState, mapMutations, mapActions } from 'vuex'
 export default {
+  data() {
+    return {
+      showType:1,
+    }
+  },
   components:{
       Top,
       ShopMsg,
@@ -42,10 +49,18 @@ export default {
       if(this.shoplist.length == 0){
         this.A_GET_SHOPLIST(this.cityInfo.id);
       }
+
+      let type = Util.getQueryString("type");
+
+      if(type && type == '2') {
+        this.showType = 2;
+      }
   },
   methods:{
-    ...mapActions(["A_GET_SHOP_DETAIL","A_GET_USER_COUNT","A_GET_USER_COMMENT","A_GET_SHOPLIST"])
-      
+    ...mapActions(["A_GET_SHOP_DETAIL","A_GET_USER_COUNT","A_GET_USER_COMMENT","A_GET_SHOPLIST"]),
+    changeShowType(num) {
+      this.showType = num;
+    }  
   }
 }
 </script>

@@ -27,7 +27,7 @@
                 </div>
                 <div class="shop-map">
                     <Icon icon="icon-chakanditu1"  size="14" color="#666"/>
-                    <span>查看地图</span>
+                    <span @click="goToMap(item)">查看地图</span>
                 </div>
             </div>
         </div>
@@ -58,6 +58,9 @@ export default {
     },
     goShopDetail(item){
       this.$router.push('/shopdetail?id='+item.id);
+    },
+    goToMap(item) {
+      this.$router.push('/shopdetail?id='+item.id + '&type=2');
     }
   }
 };
