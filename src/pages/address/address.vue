@@ -1,10 +1,10 @@
 <template>
-    <div class="address-box">
+    <div class="page-address-box">
         <div class="address-search-box">
-            <Icon icon="icon-jiantouptccc"  className="top-left" size="12" color="#000"/>
+            <Icon icon="icon-jiantouptccc"  className="top-left" size="12" color="#000" @click="goBack"/>
             <div class="address-search">
                 <Icon icon="icon-sousuo" svg className="input-icon" size="14" />
-                <input placeholder="输入您的小区，大厦，街道名称" />
+                <input placeholder="输入您的小区，大厦，街道名称" id="seachAddress"/>
             </div>
         </div>
         <div class="location-address" >
@@ -16,17 +16,17 @@
                 </div>
             </div>
             <template>
-                <div class="location-icon" style="display:block">
+                <div class="location-icon" style="display:none">
                     <Icon icon="icon-dingwei" svg className="input-icon" size="16" />
                 </div>
-                <div class="location-shop" style="display:block">
+                <div class="location-shop" style="display:none">
                     <div class="shop-name">创职天地</div>
                     <div class="shop-address">杨浦区淞沪路234-239号</div>
                 </div>
-                <div class="loaction-reset" style="display:block">重新定位</div>
+                <div class="loaction-reset" style="display:none">重新定位</div>
             </template>
         </div>
-        <div class="nearaddress-box"  style="display:block">
+        <div class="nearaddress-box"  style="display:none">
             <div class="txt">附近地址（支持上门）</div>
             <div class="nearaddress-list">
                 <div class="nearaddress-choose"></div>
@@ -64,40 +64,74 @@
                 </div>
             </div>
         </div>
-        <div class="search-address" style="display:none">
-            <div class="search-address-list">
+
+        <div class="search-address">
+            <div class="search-address-list" v-for="(item,index) in addresslist" :key="index">
                 <div class="search-address-choose"></div>
                 <div class="search-address-shop">
-                    <div class="search-address-shop-name"><span class="other-color">闵行区</span><span>浦秀路</span></div>
-                    <div class="search-address-shop-address">杨浦区淞沪路234-239号</div>
+                    <div class="search-address-shop-name"><span v-html="redFont(item.business)"></span></div>
+                    <div class="search-address-shop-address">{{item.city}}{{item.district}}</div>
                 </div>
             </div>
-            <div class="search-address-list">
-                <div class="search-address-choose"></div>
-                <div class="search-address-shop">
-                    <div class="search-address-shop-name"><span class="other-color">闵行区</span><span>浦秀路</span></div>
-                    <div class="search-address-shop-address">杨浦区淞沪路234-239号</div>
-                </div>
-            </div>
-            <div class="search-address-list">
-                <div class="search-address-choose"></div>
-                <div class="search-address-shop">
-                    <div class="search-address-shop-name"><span class="other-color">闵行区</span><span>浦秀路</span></div>
-                    <div class="search-address-shop-address">杨浦区淞沪路234-239号</div>
-                </div>
-            </div>
-            <div class="search-address-list">
-                <div class="search-address-choose"></div>
-                <div class="search-address-shop">
-                    <div class="search-address-shop-name"><span class="other-color">闵行区</span><span>浦秀路</span></div>
-                    <div class="search-address-shop-address">杨浦区淞沪路234-239号</div>
-                </div>
-            </div>
+            
         </div>
+
+
     </div>
 </template>
+<script>
+import { mapState } from "vuex";
+export default {
+  data() {
+    return {
+      map: null,
+      ac:null,
+      addresslist:[],
+      keywords:'',
+    };
+  },
+  computed: {
+    ...mapState({
+      cityInfo: state => state.trade.cityInfo
+    })
+  },
+  mounted() {
+      let self = this;
+    this.map = new BMap.Map();
+
+    this.map.centerAndZoom(self.cityInfo.cityName, 12);
+    this.ac = new BMap.Autocomplete({
+        "input": "seachAddress",
+        "type": "city",
+        "location": this.map,
+        "onSearchComplete": function(AutocompleteResult) {
+          self.ac.hide();
+            console.log(AutocompleteResult);
+          if (AutocompleteResult.getNumPois() === 0) {
+            
+          } else {
+           self.addresslist = AutocompleteResult.yr;
+           self.keywords = AutocompleteResult.keyword;
+ 
+          }
+        },
+      });
+  },
+  methods: {
+    goBack() {
+      this.$router.back();
+    },
+    redFont(msg) {
+        let reg = new RegExp(this.keywords);
+
+        return msg.replace(reg, '<span class="other-color">'+this.keywords+'</span>');
+    }
+  }
+};
+</script>
+
 <style lang="less">
-.address-box {
+.page-address-box {
   .address-search-box {
     height: 0.44rem;
     background: #fff;
@@ -147,27 +181,27 @@
         color: #666666;
         letter-spacing: 0;
         line-height: 17px;
-        margin-bottom: .15rem;
-        .other-color{
-            color: #fc6232;
+        margin-bottom: 0.15rem;
+        .other-color {
+          color: #fc6232;
         }
       }
-      .other-choose{
-          display: flex;
-          .other-box{
-              width: .96rem;
-              height: .32rem;
-              border: 1px solid #979797;
-              border-radius: 2px;
-              line-height: .32rem;
-              text-align: center;
-              margin-right: .24rem;
-              font-size: 13px;
-              color: #333;
-              &:last-child{
-                  margin-right:0;
-              }
+      .other-choose {
+        display: flex;
+        .other-box {
+          width: 0.96rem;
+          height: 0.32rem;
+          border: 1px solid #979797;
+          border-radius: 2px;
+          line-height: 0.32rem;
+          text-align: center;
+          margin-right: 0.24rem;
+          font-size: 13px;
+          color: #333;
+          &:last-child {
+            margin-right: 0;
           }
+        }
       }
     }
     .location-icon {

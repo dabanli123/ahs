@@ -2,7 +2,7 @@
     <div class="address-box">
         <div class="address-title">上门地址/时间</div>
         <div class="address-content">
-            <div class="address-text">
+            <div class="address-text" @click="goSeachAddress">
                 <Icon icon="icon-dingweimendian" size="16" color="#999"/>
                 <span class="address-choose">
                     创智天地7号楼12层4231室3我家地址很长...
@@ -77,6 +77,9 @@ export default {
     },
     onShowTimeClick() {
         this.showTime = true;
+    },
+    goSeachAddress(){
+        this.$router.push('/address');
     }
   }
 }
