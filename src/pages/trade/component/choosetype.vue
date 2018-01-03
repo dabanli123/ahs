@@ -70,7 +70,9 @@ export default {
     onClickType(num){
         this.M_UPDATE_SUBMITINFO({
             pickuptype:num
-        })
+        });
+        let urls = '/trade/index?fastorderkey=' + Util.getQueryString('fastorderkey') + '&type=' + num;
+        this.$router.replace(urls)
     }
   }
 }

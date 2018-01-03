@@ -8,14 +8,14 @@
             </div>
         </div>
         <div class="location-address" >
-            <div class="no-location" style="display:none">
-                <div class="no-msg">该地址超出上门范围，<br>为您推荐附近可<span class="other-color">支持上门地址/回收方式</span></div>
-                <div class="other-choose">
+            <div class="no-location" v-if="noAddress">
+                <div class="no-msg">未搜索到您的地址，请重新输入详细地址</div>
+                <!-- <div class="other-choose">
                     <div class="other-box">门店回收</div>
                     <div class="other-box">快递回收</div>
-                </div>
+                </div> -->
             </div>
-            <template>
+            <!-- <template>
                 <div class="location-icon" style="display:none">
                     <Icon icon="icon-dingwei" svg className="input-icon" size="16" />
                 </div>
@@ -24,7 +24,7 @@
                     <div class="shop-address">杨浦区淞沪路234-239号</div>
                 </div>
                 <div class="loaction-reset" style="display:none">重新定位</div>
-            </template>
+            </template> -->
         </div>
         <div class="nearaddress-box"  style="display:none">
             <div class="txt">附近地址（支持上门）</div>
@@ -66,7 +66,7 @@
         </div>
 
         <div class="search-address">
-            <div class="search-address-list" v-for="(item,index) in addresslist" :key="index">
+            <div class="search-address-list" v-for="(item,index) in addresslist" :key="index" @click="onChooseAddress(item)">
                 <div class="search-address-choose"></div>
                 <div class="search-address-shop">
                     <div class="search-address-shop-name"><span v-html="redFont(item.business)"></span></div>
@@ -80,7 +80,7 @@
     </div>
 </template>
 <script>
-import { mapState } from "vuex";
+import { mapState,mapMutations } from "vuex";
 export default {
   data() {
     return {
@@ -88,6 +88,7 @@ export default {
       ac:null,
       addresslist:[],
       keywords:'',
+      noAddress:false
     };
   },
   computed: {
@@ -105,19 +106,21 @@ export default {
         "type": "city",
         "location": this.map,
         "onSearchComplete": function(AutocompleteResult) {
+          self.keywords = AutocompleteResult.keyword;
           self.ac.hide();
             console.log(AutocompleteResult);
           if (AutocompleteResult.getNumPois() === 0) {
-            
+            self.noAddress = true;
+            self.addresslist = [];
           } else {
            self.addresslist = AutocompleteResult.yr;
-           self.keywords = AutocompleteResult.keyword;
- 
+           self.noAddress = false;
           }
         },
       });
   },
   methods: {
+    ...mapMutations(["M_UPDATE_SUBMITINFO"]),
     goBack() {
       this.$router.back();
     },
@@ -125,6 +128,14 @@ export default {
         let reg = new RegExp(this.keywords);
 
         return msg.replace(reg, '<span class="other-color">'+this.keywords+'</span>');
+    },
+    onChooseAddress(item){
+      console.log(item);
+      let str = item.city + item.district + (item.district == item.business ? "" : item.business);
+      this.M_UPDATE_SUBMITINFO({
+        street:str
+      });
+      this.$router.back();
     }
   }
 };

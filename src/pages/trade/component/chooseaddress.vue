@@ -5,12 +5,12 @@
             <div class="address-text" @click="goSeachAddress">
                 <Icon icon="icon-dingweimendian" size="16" color="#999"/>
                 <span class="address-choose">
-                    创智天地7号楼12层4231室3我家地址很长...
+                    {{submitInfo.street ? submitInfo.street : "请输入详细地址或街道名称"}}
                 </span>
-                <Icon icon="icon-jiantouptccc" size="14" color="#ccc"/>
+                <Icon icon="icon-jiantouptccc" size="14" color="#ccc" className="right-icon"/>
             </div>
             <div class="address-input">
-                <Input placeholder="填写门牌号/楼号" /> 
+                <Input placeholder="填写门牌号/楼号" @input="onInput" :value="submitInfo.house"/> 
             </div>
         </div>
         <div class="choose-time">
@@ -80,6 +80,11 @@ export default {
     },
     goSeachAddress(){
         this.$router.push('/address');
+    },
+    onInput(v){
+        this.M_UPDATE_SUBMITINFO({
+        house:v
+      });
     }
   }
 }
@@ -114,6 +119,10 @@ export default {
                     position: absolute;
                     bottom: 0;
                     left: .4rem;
+                }
+                .right-icon{
+                    position: absolute;
+                    right: 0.16rem;
                 }
             }
             .address-input{

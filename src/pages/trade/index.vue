@@ -28,6 +28,7 @@ import Chooseexpress from "./component/chooseexpress.vue";
 import Phoneorigin from "./component/phoneorigin.vue";
 import Othertext from "./component/othertext.vue";
 import {mapState, mapMutations, mapActions} from "vuex";
+import Util from '../../utils/index.js'
 export default {
   components: {
     Headers,
@@ -52,10 +53,15 @@ export default {
   mounted(){
     this.A_GET_SHOPLIST(this.cityInfo.id);
     this.A_GET_USERINFO();
+    let types = Util.getQueryString('type');
+    this.M_UPDATE_SUBMITINFO({
+            pickuptype:types
+        });
   },
   methods:{
-    //...mapMutations(['M_TEST']),
+    ...mapMutations(['M_UPDATE_SUBMITINFO']),
     ...mapActions(["A_GET_SHOPLIST","A_GET_USERINFO"])
+    
   }
 };
 </script>

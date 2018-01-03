@@ -44,8 +44,8 @@ const state = {
     expressTime: null,
     expressDate: null,
     mobile: '',
-    street:'莱阳新家园',
-    house:'利津路185弄',
+    street:'',
+    house:'',
     contact:'测试',
     customerExpress:1,
     regiontext:'abc',
@@ -247,6 +247,8 @@ const actions = {
 
     res = res.sort((a, b) => a < b ? 1 : -1).filter(v => v != 2);
     commit(M_GET_PICKUP_TYPE, res);
+
+    if(state.submitInfo.pickuptype != 0) return;
     commit(M_UPDATE_SUBMITINFO, {
       pickuptype: res[0]
     })
