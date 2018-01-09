@@ -1,28 +1,28 @@
 <template>
   <div id="app">
-     <!-- <router-view/> -->
-    <router-view v-if="cityInfo"/>
+     <router-view/>
+    <!-- <router-view v-if="cityInfo"/> -->
   </div>
 </template>
 
  <script>
-import {mapState, mapActions} from "vuex";
-export default {
-  name: 'app',
-  computed:{
-    ...mapState({
-      cityInfo:state=>state.trade.cityInfo
-    })
-  },
-  mounted(){
-    this.A_GET_CITY(),
-    this.A_GET_LOCATION()
-  },
-  methods:{
-    ...mapActions(["A_GET_CITY","A_GET_LOCATION"])
+// import {mapState, mapActions} from "vuex";
+// export default {
+//   name: 'app',
+//   computed:{
+//     ...mapState({
+//       cityInfo:state=>state.trade.cityInfo
+//     })
+//   },
+//   mounted(){
+//     this.A_GET_CITY(),
+//     this.A_GET_LOCATION()
+//   },
+//   methods:{
+//     ...mapActions(["A_GET_CITY","A_GET_LOCATION"])
    
-  }
-}
+//   }
+// }
 </script>
 
 <style lang="less">

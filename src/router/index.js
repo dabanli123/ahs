@@ -4,6 +4,7 @@ import index from '@/shou/cindex'
 import shop from '@/pages/shop/shop'
 import shopdetail from '@/pages/shopdetail/detail'
 import address from '@/pages/address/address'
+import assessPrice from '@/pages/assess-price/assess.vue'
 
 
 Vue.use(Router)
@@ -42,6 +43,12 @@ export default new Router({
       path: '/address',
       name: 'address',
       component: address,
+      
+    },
+    {
+      path: '/assessPrice',
+      name: 'assessPrice',
+      component: assessPrice,
       
     }
   ]
