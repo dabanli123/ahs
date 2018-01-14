@@ -1,6 +1,6 @@
 import Axios from 'axios';
 
-export default (args) => {
+export default (args,bl) => {
     args.method = args.method || 'GET';
     //args.url = ' + args.url;
 
@@ -13,6 +13,10 @@ export default (args) => {
         }).then( result => {
            
             if(result.data.code == 0) {
+                if(bl) {
+                    resolve(result.data);
+                    return;
+                }
                 resolve(result.data.data);
             }else {
                 reject(result.data)

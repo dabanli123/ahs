@@ -1,21 +1,15 @@
 <template>
-    <div class="price-box">
+    <div class="price-box" v-if="productInfo">
         <div class="price-show">
-            <div class="phone-name">iPhone 8 Plus</div>
-            <div class="phone-price">10900<span>元</span></div>
+            <div class="phone-name">{{productInfo.product.productName}}</div>
+            <div class="phone-price">{{productInfo.product.topRecyclePrice}}<span>元</span></div>
             <div class="other-msg">
-                <svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                    <!-- Generator: Sketch 47.1 (45422) - http://www.bohemiancoding.com/sketch -->
-                    <title>Combined Shape</title>
-                    <desc>Created with Sketch.</desc>
-                    <defs></defs>
-                    <g id="报价2.3" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"></g>
-                </svg>
+                <Icon icon="icon-mendian" size="12"/>
                 <span>哟，够一个伙食费</span>
             </div>
             <div class="triangle-box"></div>
         </div>
-        <div class="point-msg">一周后<span class="other-color">再降¥50</span>，建议您赶快出手!</div>
+        <div class="point-msg">一周后<span class="other-color">再降¥{{parseInt(productInfo.product.topRecyclePrice*0.02)}}</span>，建议您赶快出手!</div>
         <div class="price-up-down">
             <div class="has-data"></div>
             <div class="no-data">
@@ -25,6 +19,17 @@
         </div>
     </div>
 </template>
+<script>
+import {mapState, mapMutations, mapActions} from "vuex"; 
+export default {
+  computed:{
+    ...mapState({
+      productInfo:state=>state.inquiry.productInfo
+    })
+  }
+}
+</script>
+
 <style lang="less">
 .price-box {
   background: #fff;
@@ -63,8 +68,8 @@
     .other-msg {
       line-height: 0.24rem;
       height: 0.24rem;
-      opacity: 0.2;
-      background: #ffffff;
+      
+      background: rgba(255, 255, 255, 0.2);
       border-radius: 2px;
       width: 1.24rem;
       margin: 0 auto;

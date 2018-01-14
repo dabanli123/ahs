@@ -5,15 +5,16 @@
             <div class="toggle-problem" :class="{action:isshow == 2}" @click="onShowMsg(2)">常见问题</div>
         </div>
         <div class="toggle-content">
-            <div class="toggle-name">评论(1234)</div>
+            <template v-if="isshow == 1">
+            <div class="toggle-name">评论({{totalComment}})</div>
             <div class="toggle-comment">
-                <div class="one-comment">
+                <div class="one-comment" v-for="(item, index) in commentList" :key="index">
                     <div class="comment-people">
                         <div class="people-img"></div>
                         <div class="people-msg">
                             <div class="people-tel">
-                                <span class="tel-num">138*****831</span>
-                                <span class="comment-time">2017.01.21</span>
+                                <span class="tel-num">{{item.mobile}}</span>
+                                <span class="comment-time">{{item.createDt}}</span>
                             </div>
                             <div class="people-score">
                                 <span>评分</span>
@@ -27,81 +28,47 @@
                             </div>
                         </div>
                     </div>
-                    <div class="comment-other-msg">
-                        在上海广场店回收了一台<span class="other-color">华为P6</span>
+                    <div class="comment-other-msg" v-if="item.pickupType == 5">
+                        在{{item.shopName}}回收了一台<span class="other-color">{{item.productName}}</span>
+                    </div>
+                    <div class="comment-other-msg" v-else-if="item.pickupType == 4">
+                        快递回收了一台<span class="other-color">{{item.productName}}</span>
+                    </div>
+                    <div class="comment-other-msg" v-else>
+                        上门回收了一台<span class="other-color">{{item.productName}}</span>
                     </div>
                     <div class="comment-content">
-                        爱回收网的工作人员非常热心爱回收网的工作人员非常热心爱回收网的工作人员非常热心爱回收网的工作人员非常热心
+                        {{item.content}}
                     </div>
                 </div>
-                <div class="one-comment">
-                    <div class="comment-people">
-                        <div class="people-img"></div>
-                        <div class="people-msg">
-                            <div class="people-tel">
-                                <span class="tel-num">138*****831</span>
-                                <span class="comment-time">2017.01.21</span>
-                            </div>
-                            <div class="people-score">
-                                <span>评分</span>
-                                <span class="write-star">
-                                    <img src="../../assets/active_star.png" alt="">
-                                    <img src="../../assets/active_star.png" alt="">
-                                    <img src="../../assets/active_star.png" alt="">
-                                    <img src="../../assets/active_star.png" alt="">
-                                    <img src="../../assets/star.png" alt="">
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="comment-other-msg">
-                        在上海广场店回收了一台<span class="other-color">华为P6</span>
-                    </div>
-                    <div class="comment-content">
-                        控件高度以文本的段落高度为准，这是两行显示效果；这是两行显示效果这是两行显示效果
-                    </div>
-                </div>
-                <div class="one-comment">
-                    <div class="comment-people">
-                        <div class="people-img"></div>
-                        <div class="people-msg">
-                            <div class="people-tel">
-                                <span class="tel-num">138*****831</span>
-                                <span class="comment-time">2017.01.21</span>
-                            </div>
-                            <div class="people-score">
-                                <span>评分</span>
-                                <span class="write-star">
-                                    <img src="../../assets/active_star.png" alt="">
-                                    <img src="../../assets/active_star.png" alt="">
-                                    <img src="../../assets/active_star.png" alt="">
-                                    <img src="../../assets/active_star.png" alt="">
-                                    <img src="../../assets/star.png" alt="">
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="comment-other-msg">
-                        在上海广场店回收了一台<span class="other-color">华为P6</span>
-                    </div>
-                    <div class="comment-content">
-                        控件高度以文本的段落高度为准，这是一行显示效果
-                    </div>
-                </div>
+                
             </div>
-            <div class="toggle-problem">
+            </template>
+            <div class="toggle-problems" v-if="isshow == 2">
             </div>
         </div>
     </div>
 </template>
 <script>
+import { mapState, mapMutations, mapActions } from "vuex";
+
 export default {
   data() {
     return {
       isshow: 1
     };
   },
+  computed: {
+    ...mapState({
+      commentList: state => state.inquiry.commentList,
+      totalComment: state => state.inquiry.totalComment
+    })
+  },
+  async mounted() {
+    this.A_GET_COMMENTS();
+  },
   methods: {
+    ...mapActions(["A_GET_COMMENTS"]),
     onShowMsg(num) {
       this.isshow = num;
     }
@@ -113,6 +80,7 @@ export default {
 .toggle-box {
   background: #fff;
   margin-top: 0.08rem;
+  padding-bottom: 0.49rem;
   .toggle-title {
     height: 0.44rem;
     display: flex;
@@ -158,8 +126,8 @@ export default {
       .one-comment {
         padding: 0.24rem 0;
         border-bottom: 1px solid #eee;
-        &:last-child{
-            border-bottom: none;
+        &:last-child {
+          border-bottom: none;
         }
         .comment-people {
           padding-right: 0.15rem;
@@ -219,6 +187,9 @@ export default {
         }
       }
     }
+  }
+  .toggle-problems{
+      height: 2rem;
   }
 }
 </style>
